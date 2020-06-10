@@ -1,7 +1,26 @@
 import React from 'react';
 import './MyStuff.scss';
 
+import ItemCard from '../../shared/ItemCard/ItemCard';
+import authData from '../../../helpers/data/authData';
+import itemData from '../../../helpers/data/itemData';
+
 class MyStuff extends React.Component {
+  state = {
+    items: [],
+  }
+
+  getItems = () => {
+    const uid = authData.getUid();
+    itemData.getItemsByUid(uid)
+      .then((items) => this.setState({ items }))
+      .catch((err) => console.error('could not get Items', err));
+  }
+
+  componentDidMount() {
+    this.getItems();
+  }
+
   editEvent = (e) => {
     e.preventDefault();
     const stuffId = '12345';
@@ -15,11 +34,16 @@ class MyStuff extends React.Component {
   }
 
   render() {
+    const { items } = this.state;
+    const buildItemCards = items.map((item) => (
+        <ItemCard item={item}/>
+    ));
     return (
       <div className="MyStuff">
       <h1>My Stuff</h1>
-      <button className="btn btn-primary" onClick={this.editEvent}>Edit</button>
-      <button className="btn btn-dark" onClick={this.singleViewEvent}>Single View</button>
+      <div className="d-flex flex-wrap">
+          {buildItemCards}
+        </div>
       </div>
     );
   }
