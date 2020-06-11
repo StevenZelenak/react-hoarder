@@ -21,22 +21,10 @@ class MyStuff extends React.Component {
     this.getItems();
   }
 
-  editEvent = (e) => {
-    e.preventDefault();
-    const stuffId = '12345';
-    this.props.history.push(`/edit/${stuffId}`);
-  }
-
-  singleViewEvent = (e) => {
-    e.preventDefault();
-    const stuffId = '12345';
-    this.props.history.push(`/singlestuff/${stuffId}`);
-  }
-
   render() {
     const { items } = this.state;
     const buildItemCards = items.map((item) => (
-        <ItemCard item={item}/>
+        <ItemCard key={item.id} item={item}/>
     ));
     return (
       <div className="MyStuff">
