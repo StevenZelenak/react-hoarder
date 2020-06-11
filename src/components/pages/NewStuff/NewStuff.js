@@ -1,5 +1,7 @@
 import React from 'react';
 import './NewStuff.scss';
+import authData from '../../../helpers/data/authData';
+import itemData from '../../../helpers/data/itemData';
 
 // "item26": {
 //   "itemName": "Unicorn Mask Collection",
@@ -28,6 +30,24 @@ class NewStuff extends React.Component {
   descriptionChange = (e) => {
     e.preventDefault();
     this.setState({ itemDescription: e.target.value });
+  }
+
+  saveItem = (e) => {
+    e.preventDefault();
+    const {
+      itemName,
+      itemImage,
+      itemDescription,
+    } = this.state;
+    const newItem = {
+      itemName,
+      itemImage,
+      itemDescription,
+      uid: authData.getUid(),
+    };
+    itemData.postItem(newItem)
+      .then(() => this.props.history.push('/home'))
+      .catch((err) => console.error('unable to save item:', err));
   }
 
   render() {
@@ -65,7 +85,7 @@ class NewStuff extends React.Component {
               onChange={this.descriptionChange}
             />
           </div>
-          <button className="btn btn-primary" onClick={this.saveitem}>Save Item</button>
+          <button className="btn btn-primary" onClick={this.saveItem}>Save Item</button>
         </form>
       </div>
     );
