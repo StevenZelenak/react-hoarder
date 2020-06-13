@@ -1,25 +1,37 @@
 import React from 'react';
 import './MyStuff.scss';
 
+import ItemCard from '../../shared/ItemCard/ItemCard';
+import authData from '../../../helpers/data/authData';
+import itemData from '../../../helpers/data/itemData';
+
 class MyStuff extends React.Component {
-  editEvent = (e) => {
-    e.preventDefault();
-    const stuffId = '12345';
-    this.props.history.push(`/edit/${stuffId}`);
+  state = {
+    items: [],
   }
 
-  singleViewEvent = (e) => {
-    e.preventDefault();
-    const stuffId = '12345';
-    this.props.history.push(`/singlestuff/${stuffId}`);
+  getItems = () => {
+    const uid = authData.getUid();
+    itemData.getItemsByUid(uid)
+      .then((items) => this.setState({ items }))
+      .catch((err) => console.error('could not get Items', err));
+  }
+
+  componentDidMount() {
+    this.getItems();
   }
 
   render() {
+    const { items } = this.state;
+    const buildItemCards = items.map((item) => (
+        <ItemCard key={item.id} item={item}/>
+    ));
     return (
       <div className="MyStuff">
       <h1>My Stuff</h1>
-      <button className="btn btn-primary" onClick={this.editEvent}>Edit</button>
-      <button className="btn btn-dark" onClick={this.singleViewEvent}>Single View</button>
+      <div className="d-flex flex-wrap">
+          {buildItemCards}
+        </div>
       </div>
     );
   }
