@@ -3,12 +3,6 @@ import './NewStuff.scss';
 import authData from '../../../helpers/data/authData';
 import itemData from '../../../helpers/data/itemData';
 
-// "item26": {
-//   "itemName": "Unicorn Mask Collection",
-//   "itemImage": "https://images-na.ssl-images-amazon.com/images/I/61EtpWuRHiL._UX425_.jpg",
-//   "itemDescription": "Deluxe full-head sculpted latex mask with faux hair accents, environmental and non-toxic. Its creepy lifelike design enable you to surprise your families and friends, great for masquerade parties.",
-//   "uid": "OFrb3vuJbfQkOEisK5FGAVSM41K2"
-
 
 class NewStuff extends React.Component {
   state = {
