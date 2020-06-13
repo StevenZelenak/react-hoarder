@@ -46,7 +46,7 @@ class NewStuff extends React.Component {
       uid: authData.getUid(),
     };
     itemData.postItem(newItem)
-      .then(() => this.props.history.push('/home'))
+      .then(() => this.props.history.push('/stuff'))
       .catch((err) => console.error('unable to save item:', err));
   }
 
